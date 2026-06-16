@@ -18,14 +18,16 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
-    {
-           try {
-        $settings = Setting::first();
+  public function boot(): void
+{
+    try {
+        $settings = cache()->remember('settings', 3600, function () {
+            return \App\Models\Setting::first();
+        });
 
-        View::share('settings', $settings);
-    } catch (\Exception $e) {
-        View::share('settings', null);
+        view()->share('settings', $settings);
+    } catch (\Throwable $e) {
+        view()->share('settings', null);
     }
-    }
+}
 }
