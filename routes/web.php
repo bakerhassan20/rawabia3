@@ -25,9 +25,7 @@ require __DIR__.'/auth.php';
 */
 
 Route::get('/', function () {
-    return auth()->check()
-        ? redirect()->route('dashboard')
-        : redirect()->route('login');
+    return redirect()->route('dashboard');
 });
 
 /*
@@ -36,7 +34,7 @@ Route::get('/', function () {
 |--------------------------------------------------------------------------
 */
 
-
+Route::middleware(['auth'])->group(function () {
 
     /*
     |--------------------------------------------------------------------------
@@ -127,4 +125,4 @@ Route::get('/', function () {
 
     Route::post('/settings', [SettingController::class, 'update'])
         ->name('settings.update');
-
+});

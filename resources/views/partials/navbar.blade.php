@@ -6,11 +6,12 @@
         </button>
         <div class="navbar-user-info">
             <div class="navbar-user-avatar">
-            
+                {{ mb_substr(auth()->user()->name, 0, 1) }}
             </div>
             <div class="navbar-user-text">
-                <h5 class="navbar-user-name">مرحباً، </h5>
+                <h5 class="navbar-user-name">مرحباً، {{ auth()->user()->name }}</h5>
                 <p class="navbar-user-role">
+                    {{ auth()->user()->roles->first()->name ?? 'مدير النظام' }}
                 </p>
             </div>
         </div>
