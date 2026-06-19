@@ -16,47 +16,60 @@
 
         <!-- Menu -->
         <ul>
+            @can('view dashboard')
             <li>
                 <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
                     <i class="bi bi-grid"></i> الرئيسية
                 </a>
             </li>
-
+            @endcan
+            @can('view clients')
             <li>
                 <a href="{{ route('clients.index') }}" class="{{ request()->routeIs('clients.*') ? 'active' : '' }}">
                     <i class="bi bi-people"></i> العملاء
                 </a>
             </li>
+            @endcan
 
+            @can('view contracts')
             <li>
                 <a href="{{ route('contracts.index') }}" class="{{ request()->routeIs('contracts.*') ? 'active' : '' }}">
                     <i class="bi bi-file-text"></i> العقود
                 </a>
             </li>
+            @endcan
 
+            @can('view payments')
             <li>
                 <a href="{{ route('payments.index') }}" class="{{ request()->routeIs('payments.*') ? 'active' : '' }}">
                     <i class="bi bi-cash-stack"></i> المدفوعات
                 </a>
             </li>
+            @endcan
 
+            @can('view users')
             <li>
                 <a href="{{ route('users.index') }}" class="{{ request()->routeIs('users.*') ? 'active' : '' }}">
                     <i class="bi bi-person"></i> المستخدمين
                 </a>
             </li>
+            @endcan
 
+            @can('view roles')
             <li>
                 <a href="{{ route('roles.index') }}" class="{{ request()->routeIs('roles.*') ? 'active' : '' }}">
                     <i class="bi bi-shield-lock"></i> الصلاحيات
                 </a>
             </li>
+            @endcan
 
+            @can('view settings')
             <li>
                 <a href="{{ route('settings') }}" class="{{ request()->routeIs('settings') ? 'active' : '' }}">
                     <i class="bi bi-gear"></i> الإعدادات
                 </a>
             </li>
+            @endcan
         </ul>
     </div>
 

@@ -13,7 +13,7 @@
         <i class="bi bi-arrow-right"></i> العودة للقائمة
     </a>
 </div>
-
+@can('create roles')
 <div class="row justify-content-center">
     <div class="col-lg-8">
         <div class="card border-0 p-4">
@@ -68,5 +68,5 @@
         </div>
     </div>
 </div>
-
+@endcan
 @endsection

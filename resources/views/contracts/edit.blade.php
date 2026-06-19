@@ -3,7 +3,7 @@
 @section('title', 'تعديل عقد')
 
 @section('content')
-
+@can('edit contracts')
 <form method="POST"
       action="{{ route('contracts.update',$contract->id) }}">
 
@@ -102,8 +102,8 @@
     </button>
 
 </div>
-```
+
 
 </form>
-
+@endcan
 @endsection

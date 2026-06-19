@@ -15,6 +15,7 @@
 </div>
 @endif
 
+@can('create contracts')
 <form method="POST" action="{{ route('contracts.store') }}">
     @csrf
 
@@ -106,5 +107,5 @@
 
 
 </form>
-
+@endcan
 @endsection

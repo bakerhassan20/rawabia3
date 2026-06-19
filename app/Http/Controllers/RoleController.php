@@ -41,4 +41,30 @@ class RoleController extends Controller
             'rolePermissions'
         ));
     }
+
+    public function update(Request $request, Role $role)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $role->update([
+            'name' => $request->name
+        ]);
+
+        $role->syncPermissions($request->permissions ?? []);
+
+        return redirect()
+            ->route('roles.index')
+            ->with('success', 'تم تحديث الدور بنجاح');
+    }
+
+    public function destroy(Role $role)
+    {
+        $role->delete();
+
+        return redirect()
+            ->route('roles.index')
+            ->with('success', 'تم حذف الدور بنجاح');
+    }
 }

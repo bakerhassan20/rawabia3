@@ -13,6 +13,7 @@
         <i class="bi bi-arrow-right"></i> العودة للقائمة
     </a>
 </div>
+@can('edit clients')
 
 <div class="row justify-content-center">
     <div class="col-lg-7">
@@ -90,5 +91,5 @@
         </div>
     </div>
 </div>
-
+@endcan
 @endsection

@@ -9,11 +9,13 @@
             <h4 class="page-title">المدفوعات</h4>
             <p class="page-subtitle">سجل جميع دفعات الأقساط</p>
         </div>
+        @can('create payments')
         <a href="{{ route('payments.create') }}" class="btn-modern-primary">
             <i class="bi bi-plus-lg"></i> إضافة دفعة
         </a>
+        @endcan
     </div>
-
+@can('view payments')
     {{-- Filter --}}
     <div class="card p-4 mb-4 border-0">
         <form method="GET" class="d-flex gap-3 align-items-center flex-wrap">
@@ -87,13 +89,14 @@
                             <td>
 
                                 <div class="d-flex gap-2">
-
+                                    @can('edit payments')
                                     <a href="{{ route('payments.edit', $payment->id) }}" class="action-btn action-btn-edit">
 
                                         <i class="bi bi-pencil"></i>
 
                                     </a>
-
+                                    @endcan
+                                    @can('delete payments')
                                     <form action="{{ route('payments.destroy', $payment->id) }}" method="POST">
 
                                         @csrf
@@ -106,6 +109,7 @@
                                         </button>
 
                                     </form>
+                                    @endcan
 
                                 </div>
 
@@ -127,5 +131,5 @@
         </div>
         {{ $payments->links('vendor.pagination.bootstrap-5') }}
     </div>
-
+    @endcan
 @endsection

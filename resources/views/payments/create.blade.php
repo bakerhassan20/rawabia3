@@ -14,7 +14,7 @@
             </ul>
         </div>
     @endif
-
+@can('create payments')
     <form method="POST" action="{{ route('payments.store') }}">
         @csrf
 
@@ -112,7 +112,7 @@
         </div>
 
     </form>
-
+    @endcan
 @endsection
 
 @push('scripts')

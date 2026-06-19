@@ -9,11 +9,13 @@
         <h4 class="page-title">المستخدمين</h4>
         <p class="page-subtitle">إدارة حسابات المستخدمين والصلاحيات</p>
     </div>
+    @can('create users')
     <a href="{{ route('users.create') }}" class="btn-modern-primary">
         <i class="bi bi-plus-lg"></i> إضافة مستخدم
     </a>
+    @endcan
 </div>
-
+@can('view users')
 <div class="card border-0">
     <div class="table-responsive">
         <table class="table table-premium align-middle mb-0">
@@ -46,9 +48,12 @@
                     </td>
                     <td>
                         <div class="d-flex gap-2">
+                            @can('edit users')
                             <a href="{{ route('users.edit', $user->id) }}" class="action-btn action-btn-edit" title="تعديل">
                                 <i class="bi bi-pencil"></i>
                             </a>
+                            @endcan
+                            @can('delete users')
                             <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline"
                                   onsubmit="return confirm('هل أنت متأكد من حذف هذا المستخدم؟')">
                                 @csrf
@@ -57,6 +62,7 @@
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </form>
+                            @endcan
                         </div>
                     </td>
                 </tr>
@@ -75,5 +81,5 @@
     </div>
     {{ $users->links('vendor.pagination.bootstrap-5') }}
 </div>
-
+@endcan
 @endsection

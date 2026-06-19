@@ -3,7 +3,7 @@
 @section('title', 'تفاصيل العقد')
 
 @section('content')
-
+@can('view contracts')
 <div class="page-header">
     <div>
         <h4 class="page-title">
@@ -128,5 +128,5 @@
     </div>
 
 </div>
-
+@endcan
 @endsection

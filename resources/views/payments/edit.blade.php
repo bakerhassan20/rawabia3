@@ -15,7 +15,7 @@
             </ul>
         </div>
     @endif
-
+@can('edit payments')
     <form method="POST" action="{{ route('payments.update', $payment->id) }}">
 
         @csrf
@@ -119,7 +119,7 @@
             </a>
 
         </div>
-
+        @endcan
     </form>
 
 @endsection

@@ -11,14 +11,15 @@
     </div>
 
 
+@can('create contracts')
 <a href="{{ route('contracts.create') }}" class="btn-modern-primary">
     <i class="bi bi-plus-lg"></i>
     إضافة عقد
 </a>
-
+@endcan
 
 </div>
-
+@can('view contracts')
 <div class="card border-0">
     <div class="table-responsive">
 
@@ -76,13 +77,15 @@
                 <td>
 
                     <div class="d-flex gap-2">
-
+@can('view contracts')
                         <a href="{{ route('contracts.show',$contract->id) }}"
                            class="action-btn">
 
                             <i class="bi bi-eye"></i>
 
                         </a>
+@endcan
+@can('edit contracts')
 
                         <a href="{{ route('contracts.edit',$contract->id) }}"
                            class="action-btn action-btn-edit">
@@ -90,7 +93,8 @@
                             <i class="bi bi-pencil"></i>
 
                         </a>
-
+@endcan
+@can('delete contracts')
                         <form method="POST"
                               action="{{ route('contracts.destroy',$contract->id) }}">
 
@@ -102,7 +106,7 @@
                             </button>
 
                         </form>
-
+                        @endcan 
                     </div>
 
                 </td>
@@ -129,5 +133,5 @@
 
 
 </div>
-
+@endcan
 @endsection

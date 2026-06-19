@@ -9,11 +9,13 @@
         <h4 class="page-title">الصلاحيات</h4>
         <p class="page-subtitle">إدارة أدوار وصلاحيات النظام</p>
     </div>
+    @can('create roles')
     <a href="{{ route('roles.create') }}" class="btn-modern-primary">
         <i class="bi bi-plus-lg"></i> إضافة دور
     </a>
+    @endcan
 </div>
-
+@can('view roles')
 <div class="card border-0">
     <div class="table-responsive">
         <table class="table table-premium align-middle mb-0">
@@ -47,9 +49,21 @@
                         </div>
                     </td>
                     <td>
-                        <a href="{{ route('roles.edit', $role->id) }}" class="action-btn action-btn-edit" title="تعديل">
+                        @can('edit roles')
+                        <a href="{{ route('roles.edit', $role->id) }}" class="action-btn action-btn-edit " title="تعديل">
                             <i class="bi bi-pencil"></i>
                         </a>
+                        @endcan
+                        @can('delete roles')
+                        <form method="POST" action="{{ route('roles.destroy', $role->id) }}"
+                            class="d-inline mt-3" onsubmit="return confirm('هل أنت متأكد من حذف هذا الدور؟');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="action-btn action-btn-delete" title="حذف">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </form>
+                        @endcan
                     </td>
                 </tr>
                 @empty
@@ -66,5 +80,5 @@
         </table>
     </div>
 </div>
-
+@endcan
 @endsection

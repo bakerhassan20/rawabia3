@@ -4,6 +4,7 @@
 
 @section('content')
 
+    @can('view dashboard')
     <!-- KPI CARDS -->
     <div class="row g-4 mb-4">
 
@@ -450,6 +451,7 @@
             </div>
         </div>
     </div>
+    @endcan
 
 @endsection
 @push('scripts')

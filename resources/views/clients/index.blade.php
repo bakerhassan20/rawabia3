@@ -10,10 +10,13 @@
         <h4 class="page-title">العملاء</h4>
         <p class="page-subtitle">إدارة بيانات العملاء</p>
     </div>
+    @can('create clients')
     <a href="{{ route('clients.create') }}" class="btn-modern-primary">
         <i class="bi bi-plus-lg"></i> إضافة عميل
     </a>
+    @endcan
 </div>
+@can('view clients')
 
 {{-- Search --}}
 <div class="card p-4 mb-4 border-0">
@@ -84,9 +87,12 @@
                     </td>
                     <td>
                         <div class="d-flex gap-2">
+                            @can('edit clients')
                             <a href="{{ route('clients.edit', $client->id) }}" class="action-btn action-btn-edit" title="تعديل">
                                 <i class="bi bi-pencil"></i>
                             </a>
+                            @endcan
+                            @can('delete clients')
                             <form action="{{ route('clients.destroy', $client->id) }}" method="POST" class="d-inline"
                                   onsubmit="return confirm('هل أنت متأكد من حذف هذا العميل؟')">
                                 @csrf
@@ -95,6 +101,7 @@
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </form>
+                            @endcan
                         </div>
                     </td>
                 </tr>
@@ -114,5 +121,6 @@
     </div>
     {{ $clients->links('vendor.pagination.bootstrap-5') }}
 </div>
+@endcan
 
 @endsection
