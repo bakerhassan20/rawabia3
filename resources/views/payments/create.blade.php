@@ -25,7 +25,7 @@
                 <span class="text-danger">*</span>
             </label>
 
-            <select id="contract_id" class="form-control form-control-modern">
+            <select id="contract_id"  name="contract_id"  class="form-control form-control-modern">
 
                 <option value="">
                     اختر العقد
@@ -92,6 +92,20 @@
             </div>
         </div>
 
+        {{-- add readonly to remaining_amount --}}
+<div class="form-group-modern mb-4">
+    <label class="form-label-modern">المتبقي بعد الدفع</label>
+
+    <div class="input-icon-wrapper">
+        <i class="bi bi-wallet2 input-icon"></i>
+
+        <input type="text"
+               id="remaining_amount"
+               class="form-control form-control-modern"
+               readonly>
+    </div>
+</div>
+
         <div class="form-group-modern mb-5">
             <label class="form-label-modern">
                 ملاحظات
@@ -119,52 +133,93 @@
 
     <script>
 
-        document
-            .getElementById('contract_id')
-            .addEventListener('change', function () {
+let installmentsData = [];
 
-                let contractId = this.value;
+document.getElementById('contract_id').addEventListener('change', function () {
 
-                let installmentSelect =
-                    document.getElementById(
-                        'installment_id'
-                    );
+    let contractId = this.value;
+    let installmentSelect = document.getElementById('installment_id');
 
-                installmentSelect.innerHTML =
-                    '<option>جاري التحميل...</option>';
+    installmentSelect.innerHTML = '<option>جاري التحميل...</option>';
 
-                if (!contractId) {
+    if (!contractId) {
+        installmentSelect.innerHTML = '<option value="">اختر القسط</option>';
+        return;
+    }
 
-                    installmentSelect.innerHTML =
-                        '<option value="">اختر القسط</option>';
+    fetch(`/contracts/${contractId}/installments`)
+        .then(res => res.json())
+        .then(data => {
 
-                    return;
-                }
+            installmentsData = data;
 
-                fetch(
-                    `/contracts/${contractId}/installments`
-                )
-                    .then(response => response.json())
-                    .then(data => {
+            installmentSelect.innerHTML = '<option value="">اختر القسط</option>';
 
-                        installmentSelect.innerHTML =
-                            '<option value="">اختر القسط</option>';
-
-                        data.forEach(item => {
-
-                            installmentSelect.innerHTML += `
+            data.forEach(item => {
+                installmentSelect.innerHTML += `
                     <option value="${item.id}">
                         قسط رقم ${item.installment_number}
-                        - ${item.amount} ر.س
+                        - المتبقي ${item.remaining} ر.س
                     </option>
                 `;
-
-                        });
-
-                    });
-
             });
+        });
+});
 
-    </script>
+document.getElementById('installment_id').addEventListener('change', function () {
 
+    let selectedId = this.value;
+    let amountInput = document.querySelector('input[name="amount"]');
+    let remainingInput = document.querySelector('input[name="remaining_amount"]');
+
+    let installment = installmentsData.find(i => i.id == selectedId);
+
+    if (!installment) {
+        remainingInput.value = '';
+        return;
+    }
+
+    let remaining = installment.remaining;
+
+    remainingInput.value = remaining.toFixed(2);
+
+    // optional: منع إدخال مبلغ أكبر من المتبقي
+    amountInput.setAttribute('max', remaining);
+});
+
+</script>
+<script>
+
+let currentRemaining = 0;
+
+document.getElementById('installment_id').addEventListener('change', function () {
+
+    let selectedId = this.value;
+
+    let installment = installmentsData.find(i => i.id == selectedId);
+
+    if (!installment) return;
+
+    currentRemaining = parseFloat(installment.remaining);
+
+    document.getElementById('remaining_amount').value =
+        currentRemaining.toFixed(2);
+});
+
+
+document.querySelector('input[name="amount"]').addEventListener('input', function () {
+
+    let entered = parseFloat(this.value) || 0;
+
+    let newRemaining = currentRemaining - entered;
+
+    if (newRemaining < 0) {
+        newRemaining = 0;
+    }
+
+    document.getElementById('remaining_amount').value =
+        newRemaining.toFixed(2);
+});
+
+</script>
 @endpush

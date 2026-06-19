@@ -33,7 +33,7 @@
             </div>
             @endif
 
-            <form method="POST" action="{{ route('clients.update', $client->id) }}">
+            <form method="POST" action="{{ route('clients.update', $client->id) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
@@ -71,6 +71,22 @@
                         <input type="text" name="address" value="{{ old('address', $client->address) }}"
                                class="form-control form-control-modern">
                     </div>
+                </div>
+
+                <div class="form-group-modern mb-4">
+                    <label class="form-label-modern">صورة الهوية</label>
+                     <div class="input-icon-wrapper">
+                         <i class="bi bi-file-earmark input-icon"></i>
+                        <input type="file" name="identification_photo"
+                                class="form-control form-control-modern">
+                    </div>
+                    @if ($client->identification_photo)
+                        <a href="{{ asset('storage/' . $client->identification_photo) }}"
+                            target="_blank"
+                            class="mt-2 d-inline-block">
+                            عرض الصورة الحالية
+                        </a>
+                    @endif
                 </div>
 
                 <div class="form-group-modern mb-5">

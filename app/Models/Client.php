@@ -16,7 +16,8 @@ class Client extends Model
         'phone',
         'address',
         'notes',
-        'status'
+        'status',
+        'identification_photo'
     ];
 
     public function payments()

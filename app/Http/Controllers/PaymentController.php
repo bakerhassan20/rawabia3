@@ -53,25 +53,29 @@ class PaymentController extends Controller
             ]);
 
             $installment = $payment->installment;
-
-            $paid = $installment->payments()->sum('amount');
-
-            if ($paid >= $installment->amount) {
-                $installment->update([
-                    'status' => 'paid'
-                ]);
-            }
+            $this->updateInstallmentStatus($installment);
 
             return redirect()
                 ->route('payments.index')
                 ->with('success', 'تم تسجيل الدفعة');
         }
 
- public function getInstallments($contractId)
+public function getInstallments($contractId)
 {
     $installments = Installment::where('contract_id', $contractId)
         ->where('status', '!=', 'paid')
-        ->get();
+        ->get()
+        ->map(function ($installment) {
+
+            $paid = $installment->payments()->sum('amount');
+
+            return [
+                'id' => $installment->id,
+                'installment_number' => $installment->installment_number,
+                'amount' => $installment->amount,
+                'remaining' => $installment->amount - $paid,
+            ];
+        });
 
     return response()->json($installments);
 }
@@ -102,14 +106,41 @@ public function update(Request $request, Payment $payment)
         'notes' => $request->notes,
     ]);
 
+    $this->updateInstallmentStatus($payment->installment);
+
     return redirect()
         ->route('payments.index')
         ->with('success', 'تم تعديل الدفعة بنجاح');
 }
     public function destroy(Payment $payment)
     {
+        $installment = $payment->installment;
         $payment->delete();
+        $this->updateInstallmentStatus($installment);
 
-        return back()->with('success', 'Payment deleted');
+        return back()->with('success', 'تم حذف الدفعة');
+    }
+
+
+    private function updateInstallmentStatus(Installment $installment)
+    {
+        $paid = $installment->payments()->sum('amount');
+
+        if ($paid >= $installment->amount) {
+            $status = 'paid';
+        } elseif ($paid > 0) {
+            $status = 'partial';
+        } else {
+            $status = 'pending';
+        }
+
+        $installment->update([
+            'status' => $status
+        ]);
+    }
+    public function print(Payment $payment)
+    {
+        
+        return view('payments.print', compact('payment'));
     }
 }

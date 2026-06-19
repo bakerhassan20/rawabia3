@@ -32,7 +32,7 @@
             </div>
             @endif
 
-            <form method="POST" action="{{ route('clients.store') }}">
+            <form method="POST" action="{{ route('clients.store') }}" enctype="multipart/form-data">
                 @csrf
 
                 <div class="form-group-modern mb-4">
@@ -72,6 +72,17 @@
                         <input type="text" name="address" value="{{ old('address') }}"
                                class="form-control form-control-modern"
                                placeholder="مثال: القاهرة، مصر الجديدة">
+                    </div>
+                </div>
+
+
+
+                <div class="form-group-modern mb-4">
+                    <label class="form-label-modern">صورة الهوية</label>
+                     <div class="input-icon-wrapper">
+                         <i class="bi bi-file-earmark input-icon"></i>
+                        <input type="file" name="identification_photo"
+                                class="form-control form-control-modern">
                     </div>
                 </div>
 

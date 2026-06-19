@@ -56,6 +56,14 @@
 
 </div>
 
+<div class="mb-3" style="text-align: left;">
+    <form action="{{ route('contracts.update_installments',$contract->id) }}" method="POST">
+        @csrf
+        @method('PUT')
+        <button type="submit" class="btn-modern-primary">تحديث حالة الأقساط</button>
+    </form>
+</div>
+
 <div class="card">
 
     <div class="card-header">
@@ -105,6 +113,12 @@
 
                             <span class="badge bg-danger">
                                 متأخر
+                            </span>
+
+                        @elseif($installment->status == 'partial')
+
+                            <span class="badge bg-info">
+                                جزئي
                             </span>
 
                         @else

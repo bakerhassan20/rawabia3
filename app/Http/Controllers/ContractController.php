@@ -137,6 +137,45 @@ public function update(Request $request, Contract $contract)
         ->with('success', 'تم تعديل العقد بنجاح');
 }
 
+    public function updateInstallments(Request $request, Contract $contract)
+    {
+        foreach ($contract->installments as $installment) {
+
+            $installment->status = 'pending'; 
+
+            $totalPaid = $installment->payments()->sum('amount');
+
+            if ($totalPaid >= $installment->amount) {
+
+                $installment->status = 'paid';
+
+            } elseif ($totalPaid > 0) {
+
+                $installment->status = 'partial';
+
+            } elseif (Carbon::parse($installment->due_date)->isPast()) {
+
+                $installment->status = 'overdue';
+
+            }
+
+            $installment->save();
+        }
+
+        // تحديث حالة العقد
+        if ($contract->installments->where('status', '!=', 'paid')->isEmpty()) {
+            $contract->status = 'paid';
+        } else {
+            $contract->status = 'active';
+        }
+        $contract->save();
+
+        return back()->with(
+            'success',
+            'تم تحديث حالة الأقساط بنجاح'
+        );
+    }
+
     public function destroy(Contract $contract)
     {
         $contract->delete();

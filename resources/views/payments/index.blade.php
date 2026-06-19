@@ -111,6 +111,16 @@
                                     </form>
                                     @endcan
 
+                                    @can('view payments')
+                                    <a href="{{ route('payments.print', $payment->id) }}"
+                                    target="_blank"
+                                    class="action-btn action-btn-print"
+                                    title="طباعة سند قبض">
+
+                                        <i class="bi bi-printer"></i>
+                                    </a>
+                                    @endcan
+
                                 </div>
 
                             </td>

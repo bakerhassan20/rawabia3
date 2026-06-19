@@ -10,7 +10,7 @@
         <p class="page-subtitle">تخصيص إعدادات لوحة التحكم</p>
     </div>
 </div>
-
+@can('edit settings')
 <div class="row justify-content-center">
     <div class="col-lg-7">
         <div class="card border-0 p-4">
@@ -117,5 +117,5 @@
         </div>
     </div>
 </div>
-
+@endcan
 @endsection

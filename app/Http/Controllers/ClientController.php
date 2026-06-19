@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Http\Requests\ClientRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ClientController extends Controller
 {
@@ -27,11 +28,18 @@ class ClientController extends Controller
 
     public function store(ClientRequest $request)
     {
-        Client::create($request->validated());
+        $data = $request->validated();
+
+        if ($request->hasFile('identification_photo')) {
+            $data['identification_photo'] =
+                $request->file('identification_photo')->store('clients','public');
+        }
+
+        Client::create($data);
 
         return redirect()
             ->route('clients.index')
-            ->with('success', 'Client created successfully');
+            ->with('success', 'تم إضافة العميل بنجاح');
     }
 
     public function edit(Client $client)
@@ -41,11 +49,24 @@ class ClientController extends Controller
 
     public function update(ClientRequest $request, Client $client)
     {
-        $client->update($request->validated());
+        $data = $request->validated();
+
+        if ($request->hasFile('identification_photo')) {
+
+            if ($client->identification_photo) {
+                Storage::delete($client->identification_photo);
+            }
+
+            $data['identification_photo'] =
+                $request->file('identification_photo')->store('clients','public');
+          
+        }
+
+        $client->update($data);
 
         return redirect()
             ->route('clients.index')
-            ->with('success', 'Client updated successfully');
+            ->with('success', 'تم تعديل العميل بنجاح');
     }
 
     public function destroy(Client $client)

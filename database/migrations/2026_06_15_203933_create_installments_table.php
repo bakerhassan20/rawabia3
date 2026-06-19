@@ -25,7 +25,8 @@ return new class extends Migration
             $table->enum('status', [
                 'pending',
                 'paid',
-                'overdue'
+                'overdue',
+                'partial'
             ])->default('pending');
 
             $table->softDeletes();

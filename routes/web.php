@@ -88,6 +88,17 @@ Route::middleware(['auth'])->group(function () {
     [PaymentController::class, 'getInstallments']
 )->name('contracts.installments');
 
+Route::put('/contracts/{contract}/update-installments', [
+    ContractController::class,
+    'updateInstallments',
+])->name('contracts.update_installments');
+
+
+
+    
+
+
+
     /*
     |--------------------------------------------------------------------------
     | PAYMENTS MODULE
@@ -95,7 +106,8 @@ Route::middleware(['auth'])->group(function () {
     */
 
     Route::resource('payments', PaymentController::class);
-
+    Route::get('/payments/{payment}/print', [PaymentController::class, 'print'])
+    ->name('payments.print');
     
 
     /*
