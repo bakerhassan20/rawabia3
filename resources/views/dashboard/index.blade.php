@@ -10,7 +10,7 @@
 
         <!-- Card 1: إجمالي العملاء -->
         <div class="col-md-3">
-            <div class="kpi-card kpi-card-blue">
+            <div class="card kpi-card-blue">
                 <div class="kpi-card-body">
                     <div class="kpi-card-info">
                         <h6>إجمالي العملاء</h6>
@@ -305,6 +305,58 @@
         </div>
 
     </div>
+
+
+    <div class="row g-4 mb-4 mt-5">
+
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-info">
+                    <h6>إجمالي رأس المال</h6>
+                    <h3>{{ number_format($totalCarPrice) }}<span class="fs-6"> ر.س</span></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-info">
+                    <h6>إجمالي الأرباح</h6>
+                    <h3>{{ number_format($totalInterest) }} <span class="fs-6"> ر.س</span></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-info">
+                    <h6>إجمالي المحصل</h6>
+                    <h3>{{ number_format($totalCollected) }}<span class="fs-6"> ر.س</span></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-info">
+                    <h6>إجمالي المتبقي</h6>
+                    <h3>{{ number_format($totalRemaining) }}<span class="fs-6"> ر.س</span></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
     <!-- LATEST PAYMENTS TABLE -->
     <div class="row g-4 mb-4 mt-5">
         <div class="col-12">

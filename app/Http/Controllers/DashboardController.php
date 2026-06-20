@@ -11,7 +11,21 @@ use Illuminate\Support\Facades\DB;
 class DashboardController extends Controller
 {
     public function index()
+    
     {
+
+        $totalCarPrice = Contract::sum('car_price');
+
+        $totalInterest = Contract::sum('interest_value');
+
+        $totalReceivable = Contract::sum('total_amount');
+
+        $totalCollected = Payment::sum('amount');
+
+        $totalRemaining = $totalReceivable - $totalCollected;
+
+
+
         $totalClients = Client::count();
 
         $totalContracts = Contract::count();
@@ -70,7 +84,13 @@ class DashboardController extends Controller
             'latestClients',
             'latestPayments',
             'latestOverdues',
-            'monthlyRevenue'
+            'monthlyRevenue',
+            
+            'totalCarPrice',
+            'totalInterest',
+            'totalReceivable',
+            'totalCollected',
+            'totalRemaining',
         ));
     }
 }
