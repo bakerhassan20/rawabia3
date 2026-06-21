@@ -16,48 +16,54 @@ class RoleSeeder extends Seeder
         $permissions = [
 
             // Dashboard
-            'view dashboard',
+            'view dashboard' => 'عرض لوحة التحكم',
 
             // Clients
-            'view clients',
-            'create clients',
-            'edit clients',
-            'delete clients',
+            'view clients' => 'عرض العملاء',
+            'create clients' => 'إضافة عميل',
+            'edit clients' => 'تعديل عميل',
+            'delete clients' => 'حذف عميل',
 
             // Contracts
-            'view contracts',
-            'create contracts',
-            'edit contracts',
-            'delete contracts',
+            'view contracts' => 'عرض العقود',
+            'create contracts' => 'إضافة عقد',
+            'edit contracts' => 'تعديل عقد',
+            'delete contracts' => 'حذف عقد',
 
             // Payments
-            'view payments',
-            'create payments',
-            'edit payments',
-            'delete payments',
+            'view payments' => 'عرض المدفوعات',
+            'create payments' => 'إضافة دفعة',
+            'edit payments' => 'تعديل دفعة',
+            'delete payments' => 'حذف دفعة',
 
             // Users
-            'view users',
-            'create users',
-            'edit users',
-            'delete users',
+            'view users' => 'عرض المستخدمين',
+            'create users' => 'إضافة مستخدم',
+            'edit users' => 'تعديل مستخدم',
+            'delete users' => 'حذف مستخدم',
 
             // Roles
-            'view roles',
-            'create roles',
-            'edit roles',
-            'delete roles',
+            'view roles' => 'عرض الصلاحيات',
+            'create roles' => 'إضافة صلاحية',
+            'edit roles' => 'تعديل صلاحية',
+            'delete roles' => 'حذف صلاحية',
 
             // Settings
-            'view settings',
-            'edit settings',
+            'view settings' => 'عرض الإعدادات',
+            'edit settings' => 'تعديل الإعدادات',
         ];
 
-        foreach ($permissions as $permission) {
-            Permission::firstOrCreate([
-                'name' => $permission,
-                'guard_name' => 'web'
-            ]);
+        foreach ($permissions as $name => $description) {
+
+            Permission::updateOrCreate(
+                [
+                    'name' => $name,
+                    'guard_name' => 'web'
+                ],
+                [
+                    'description' => $description
+                ]
+            );
         }
 
         // Roles
@@ -87,7 +93,7 @@ class RoleSeeder extends Seeder
             'create clients',
             'edit clients',
             'delete clients',
-            
+
             'view contracts',
             'create contracts',
             'edit contracts',
@@ -106,7 +112,6 @@ class RoleSeeder extends Seeder
             'create roles',
             'edit roles',
             'delete roles',
-            
 
             'view settings',
             'edit settings',
@@ -117,7 +122,6 @@ class RoleSeeder extends Seeder
             'view dashboard',
 
             'view clients',
-
             'view contracts',
 
             'view payments',
