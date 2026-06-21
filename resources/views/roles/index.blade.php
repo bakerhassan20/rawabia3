@@ -42,7 +42,7 @@
                     <td>
                         <div class="d-flex flex-wrap gap-1">
                             @forelse($role->permissions as $permission)
-                                <span class="perm-badge">{{ $permission->name }}</span>
+                                <span class="perm-badge">{{ $permission->description }}</span>
                             @empty
                                 <span class="text-muted">لا يوجد صلاحيات</span>
                             @endforelse

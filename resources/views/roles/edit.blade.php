@@ -52,7 +52,7 @@
                                    @checked(in_array($permission->name, $rolePermissions))>
                             <div class="role-card-content">
                                 <i class="bi bi-check2-circle"></i>
-                                <span>{{ $permission->name }}</span>
+                                <span>{{ $permission->description }}</span>
                             </div>
                         </label>
                         @endforeach

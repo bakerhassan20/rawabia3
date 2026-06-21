@@ -51,7 +51,7 @@
                                    {{ in_array($permission->name, old('permissions', [])) ? 'checked' : '' }}>
                             <div class="role-card-content">
                                 <i class="bi bi-check2-circle"></i>
-                                <span>{{ $permission->name }}</span>
+                                <span class="role-name">{{ $permission->description }}</span>
                             </div>
                         </label>
                         @endforeach
